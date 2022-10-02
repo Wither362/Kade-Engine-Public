@@ -284,7 +284,7 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT || FlxG.mouse.justPressed;
+		var pressedEnter:Bool = (FlxG.keys.justPressed.ENTER || controls.ACCEPT || FlxG.mouse.justPressed);
 
 		#if mobile
 		for (touch in FlxG.touches.list)
@@ -298,10 +298,10 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			if (FlxG.save.data.flashing)
+			if (FlxG.save.data.flashing) {
 				titleText.animation.play('press');
-
-			FlxG.camera.flash(FlxColor.WHITE, 1);
+				FlxG.camera.flash(FlxColor.WHITE, 1);
+			}
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
@@ -490,7 +490,8 @@ class TitleState extends MusicBeatState
 
 			remove(ngSpr);
 
-			FlxG.camera.flash(FlxColor.WHITE, 4);
+			if(FlxG.save.data.flashing)
+				FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 
 			FlxTween.tween(logoBl, {y: -100}, 1.4, {ease: FlxEase.expoInOut});
